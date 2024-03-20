@@ -40,4 +40,10 @@ def add_category():
 # this function handles the editing capability. When a variable is passed back into the function it needs <> cast as an int as 1' = an integer
 @app.route("/edit_category/<int:category_id>", methods=["GET", "POST"])
 def edit_category(category_id):
-    return render_template("edit_category.html")
+    # so the route directory knows which catagory to load. if it can't find the spec record it triggers a 404 error page
+    category = Category.query.get_or_404(category_id)
+    if request.method == "POST":
+        category.category_name = request.form.get("category_name") # update category name, then commit the session to database and redirect
+        db.session.commit()
+        return redirect(url_for("categories"))
+    return render_template("edit_category.html", category =category)
