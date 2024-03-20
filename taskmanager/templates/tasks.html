@@ -3,5 +3,33 @@
 
 <h3 class="light-green-text text-darken-4 center-align">Tasks</h3>
 
+<div class="row">
+    <div class="col s12 center-align">
+        <a href="{{ url_for('add_task') }}" class="btn-large pink darken-1">
+            Add Task <i class="fas fa-plus-square right"></i>
+        </a>
+    </div>
+</div>
+
+<ul class="collapsible">
+    <!-- need a for loop as we dont know how many tasks we have. Thi siterates over each task from the database and add each item -->
+    {% for task in tasks %}
+    <li>
+      <div class="collapsible-header green accent-4 white-text">
+        <i class="fas fa-carrot-down"></i>
+        <!-- display task name and due date -->
+        <strong>{{ task.task_name }}</strong> : {{task.due_date.strftime("%d %B, %Y") }} 
+        {% if task.is_urgent == True %}
+        <i class="fas fa-exclamation-circle red-text text-lighten-1"></i>
+        {% endif %}
+    </div>
+      <div class="collapsible-body">
+        <strong>{{ task.category }}</strong>
+        <p>{{ task.task_description }}</p>
+      </div>
+    </li>    
+    {% endfor %}
+  </ul>
+
 
 {% endblock %}
