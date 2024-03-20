@@ -14,7 +14,11 @@ def home():
 
 @app.route("/categories")
 def categories(): # remember this is calling the python function not the app.route
-    return render_template("categories.html")
+    # query the Category model. order_by req to stop order being by 1' key. This will happen whenever you navigate to the categories page. 
+    categories = list(Category.query.order_by(Category.category_name).all())
+    #categories.categories added with query. Uses data to display to user. This is a cursor object therefore req list above
+    #1st categories comes from variable name within html template, the 2nd is the list defined above in the function
+    return render_template("categories.html", categories=categories) 
 
 
 # function name matches what was added to the link href on the add category button.
