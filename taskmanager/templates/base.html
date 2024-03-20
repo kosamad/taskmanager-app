@@ -24,11 +24,11 @@
                 <!-- navbar at top of page -->
                 <div class="nav-wrapper">
                     <a href="{{ url_for('home') }}" class="brand-logo">Task Manager</a>
-                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars">menu</i></a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="fas fa-bars"></i></a>
                     <ul class="right hide-on-med-and-down">
                         <li><a href="{{ url_for('home') }}">Home</a></li>
                         <li><a href="">New Task</a></li>
-                        <li><a href="">Catagories</a></li>
+                        <li><a href="{{ url_for('categories') }}">Categories</a></li>
 
                     </ul>
                 </div>
@@ -37,7 +37,7 @@
             <ul class="sidenav" id="mobile-demo">
                 <li><a href="{{ url_for('home') }}">Home</a></li>
                 <li><a href="">New Task</a></li>
-                <li><a href="">Catagories</a></li>
+                <li><a href="{{ url_for('categories') }}">Catagories</a></li>
             </ul>
         </nav>
     </header>
@@ -63,7 +63,7 @@
     <!-- Compiled and minified JavaScript from materialize-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- link to custom JS -->
-    <script src="{{ url_for('static', filenmae='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 </body>
 
