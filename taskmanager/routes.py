@@ -38,6 +38,6 @@ def add_category():
 # The above could be put into two separate functions also in real world would want to add some defensive programming and handling errors.
 
 # this function handles the editing capability. When a variable is passed back into the function it needs <> cast as an int as 1' = an integer
-@app.route("/edit_category/<int:cetegory_id", methods=["GET", "POST"])
+@app.route("/edit_category/<int:category_id>", methods=["GET", "POST"])
 def edit_category(category_id):
     return render_template("edit_category.html")
