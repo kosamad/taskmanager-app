@@ -11,7 +11,7 @@
         <!-- prefix on icon puts it before the box -->
         <i class="fas fa-pencil-alt prefix light-green-text text-darken-4"></i>
         <!-- id, name and label for below all have same name -->
-        <input id="task_name" name="task_name" minlength="5" maxlength="50" type="text" class="validate" required>
+        <input id="task_name" name="task_name" value="{{ task.task_name}}" minlength="5" maxlength="50" type="text" class="validate" required>
         <label for="task_name">Task Name</label>
       </div>
     </div>
@@ -21,8 +21,10 @@
       <div class="input-field col s12">      
         <i class="fas fa-align-left prefix light-green-text text-darken-4"></i>        
         <!-- use textarea as will be a longer string -->
+        <!-- - symbol here takes away white space t the beginnig of the variable (a Jinja helper element) -->
         <textarea id="task_description" name="task_description" minlength="5" maxlength="250" type="text"
-          class="materialize-textarea validate" required></textarea>
+          class="materialize-textarea validate" required>      
+        {{- task.task_description -}}</textarea>
         <label for="task_description">Task Description</label>
       </div>
     </div>
@@ -31,7 +33,7 @@
     <div class="row">
       <div class="input-field col s12">        
         <i class="fas fa-pencil-alt prefix light-green-text text-darken-4"></i>       
-        <input id="due_date" name="due_date" type="text" class="datepicker validate" required>
+        <input id="due_date" name="due_date" type="text" class="datepicker validate" value ="{{ task.due_date.strftime('%d %B, %Y') }}" required>
         <label for="due_date">Due Date</label>
       </div>
     </div>
@@ -43,7 +45,12 @@
         <div class="switch">
           <i class="fas fa-exclamation-circle prefix light-green-text text-darken-4"></i>
           <label for="is_urgent">
+            <!-- if the task is urgent (true) then add this checked input field. else show normal field -->
+            {% if task.is_urgent == True %} 
+            <input id="is_urgent" name="is_urgent" type="checkbox" checked>
+            {% else %}
             <input id="is_urgent" name="is_urgent" type="checkbox">
+            {% endif %}
             <span class="lever"></span>
             Is Urgent
           </label>
@@ -61,7 +68,12 @@
           <!-- for loop to list all the categories that are retireved from the database -->
           {% for category in categories %}
             <!-- with select elements the value is what is grabbed to store the data (not name like normal) -->
+            <!-- need to check if current catagory iteration matched task category we are updating. if it is have that be slected -->
+            {% if category == task.category %}
+            <option value="{{ category.id }}" selected >{{ category.category_name }}</option>
+            {% else %}
             <option value="{{ category.id }}">{{ category.category_name }}</option>
+            {% endif %}
           {% endfor %}
         </select>
         <label for="category_id">Category</label>
