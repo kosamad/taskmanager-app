@@ -92,7 +92,7 @@ def edit_task(task_id): #and task_id is here too
 
 # takes task_id variable and then query's the database to find that task. Then it removes it using the delete() method and commits the changes. 
 @app.route("/delete_task/<int:task_id>")
-def delete_category(task_id):
+def delete_task(task_id):
     # specify which task we want to delete (uses same functionality to above to find the category)
     task = Task.query.get_or_404(task_id)
     db.session.delete(task)
