@@ -13,10 +13,11 @@
 
 <ul class="collapsible">
     <!-- need a for loop as we dont know how many tasks we have. Thi siterates over each task from the database and add each item -->
-    {% for task in tasks %}
+    <!-- sorting data by our attribute due_date (explore more ways to sort on the jinja website) -->
+    {% for task in tasks | sort(attribute="due_date") %} 
     <li>
       <div class="collapsible-header green accent-4 white-text">
-        <i class="fas fa-carrot-down"></i>
+        <i class="fas fa-caret-down"></i>
         <!-- display task name and due date -->
         <strong>{{ task.task_name }}</strong> : {{task.due_date.strftime("%d %B, %Y") }} 
         {% if task.is_urgent == True %}
@@ -26,6 +27,9 @@
       <div class="collapsible-body">
         <strong>{{ task.category }}</strong>
         <p>{{ task.task_description }}</p>
+        <p>
+          <a href="{{ url_for('edit_task', task_id=task.id) }}" class="btn green accent-4">Edit</a>
+        </p>
       </div>
     </li>    
     {% endfor %}

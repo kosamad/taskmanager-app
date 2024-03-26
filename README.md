@@ -1,3 +1,19 @@
+if env.py file dissapears recreate file env.py
+
+import os
+
+os.environ.setdefault("IP", "0.0.0.0")
+os.environ.setdefault("PORT", "5000") # always for Flask appliations
+os.environ.setdefault("SECRET_KEY", "any_secret_key") #any string i want
+os.environ.setdefault("DEBUG", "True") #MAKE SURE THIS IS SET TO FALSE BEFORE submission
+os.environ.setdefault("DEVELOPMENT", "True")
+os.environ.setdefault("DB_URL", "postgresql:///taskmanager") # this is the database
+
+
+For errors in database see later posts by Jawahir and Niclas_5p_lead (if taskmanager import db doesn't work)
+
+
+
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 Welcome kosamad samad,

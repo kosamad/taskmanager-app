@@ -8,7 +8,7 @@ from taskmanager.models import Category, Task
 # tasks variable is created later to view tasks as is, tasks=tasks
 @app.route("/")
 def home():
-    tasks = list(Task.query.order_by(Task.id).all())
+    tasks = list(Task.query.order_by(Task.id).all()) # converting database queries into python lists
     return render_template("tasks.html",tasks=tasks) #task=task passes list to front end template
 
 
@@ -64,14 +64,28 @@ def delete_category(category_id):
 def add_task():    
     categories = list(Category.query.order_by(Category.category_name).all())
     if request.method == "POST":
-        task = Task(
-        task_name = request.form.get("task_name"),
+        task=Task(
+        task_name=request.form.get("task_name"),
         task_description=request.form.get("task_description"),
         is_urgent=bool(True if request.form.get("is_urgent") else False),
-        due_date = request.form.get("due_date"),
-        category_id = request.form.get("category_id")
+        due_date=request.form.get("due_date"),
+        category_id=request.form.get("category_id")
         )       
         db.session.add(task)
         db.session.commit()      
         return redirect(url_for("home"))
     return render_template("add_task.html", categories = categories) # second argument gives a dropdown list to display available catagories (see above for where come from)
+
+@app.route("/edit_task/<int:task_id>", methods=["GET", "POST"]) # need to know which task want to edit so task ID(as an int) is in the app root URL
+def edit_task(task_id): #and task_id is here too
+    task = Task.query.get_or_404(task_id)
+    categories = list(Category.query.order_by(Category.category_name).all())
+    if request.method == "POST":
+        # Update each column using . notation. Important to do for all tasks otherwise they might be deleted (when a user only updates 1 field)
+        task.task_name = request.form.get("task_name")
+        task.task_description = request.form.get("task_description")
+        task.is_urgent = bool(request.form.get("is_urgent"))
+        task.due_date = request.form.get("due_date")
+        task.category_id = request.form.get("category_id")
+        db.session.commit()       
+    return render_template("edit_task.html", task=task, categories=categories)# second argument gives a dropdown list to display available catagories and tasks 
