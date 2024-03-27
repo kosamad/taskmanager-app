@@ -8,7 +8,7 @@ from taskmanager.models import Category, Task
 # tasks variable is created later to view tasks as is, tasks=tasks
 @app.route("/")
 def home():
-    tasks = list(Task.query.order_by(Task.id).all()) # converting database queries into python lists
+    tasks = list(Task.query.order_by(task.id).all()) # converting database queries into python lists
     return render_template("tasks.html",tasks=tasks) #task=task passes list to front end template
 
 
